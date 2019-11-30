@@ -279,9 +279,10 @@ class MaxCube(MaxDevice):
         self.connection.connect()
         self.connection.send(command)
         logger.debug('Response: ' + self.connection.response)
+        self.connection.send('l:\r\n')
+        response = self.connection.response
+        self.parse_response(response)
         self.connection.disconnect()
-        thermostat.target_temperature = int(temperature * 2) / 2.0
-        thermostat.mode = mode
 
     @classmethod
     def resolve_device_mode(cls, bits):
